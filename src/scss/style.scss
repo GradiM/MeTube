@@ -1,0 +1,60 @@
+/*@import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";*/
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+body {
+  padding-top: 56px;
+}
+
+form {
+  .input-group {
+    width: 98%;
+  }
+}
+
+.form-control:focus {
+  box-shadow: none;
+}
+
+.form-control-underlined {
+  border-width: 0;
+  border-bottom-width: 1px;
+  border-radius: 0;
+  padding-left: 0;
+}
+
+.form-control::placeholder {
+  font-size: 0.95rem;
+  color: #aaa;
+  font-style: italic;
+}
+
+.right-side {
+  margin-top: 4.5rem!important;
+
+  .btn {
+    display: block;
+    border: none;
+    font-weight: initial;
+    cursor: pointer;
+  }
+
+  .filter-not-clicked {
+    color: black;
+    &:hover {
+      color: #ffffff;
+    }
+  }
+
+  .filter-clicked {
+    background-color: #28a745;
+    color: #ffffff;
+  }
+}
+
+#left-side {
+  .card-img-top {
+    height: 25rem;
+  }
+  .img-none {
+    font-size: 200px;
+  }
+}
