@@ -1,3 +1,3 @@
-const urlAPI = 'http://www.omdbapi.com';
+const urlAPI = 'https://api.themoviedb.org/3';
 
 export default urlAPI;

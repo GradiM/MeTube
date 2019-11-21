@@ -1,20 +1,18 @@
-// la fonction showArticlesByDate récupère des données par genre séléctionné
-const showArticlesByGenre = () => {
+// la fonction showArticlesByDate affiche les genres possible
+const showArticlesByGenre = (data) => {
   let html = '';
-  html += `
-      <div class="input-group">
-          <form>
-              <fieldset>
-                  <input type="checkbox" name="favorite_pet" value="Cats">Cats<br>
-                  <input type="checkbox" name="favorite_pet" value="Dogs">Dogs<br>
-                  <input type="checkbox" name="favorite_pet" value="Birds">Birds<br>
-                  <br>
-                  <button class="btn btn-secondary" type="button">Go!</button>
-              </fieldset>
-          </form>
-      </div>
-      <hr class="col-xs-12">
-  `;
+  let indice = 0;
+
+  html += `<div class="input-group"><form id="formSearcheByGenre"><fieldset>`;
+  const genres = data.genres;
+
+  genres.forEach((genre) => {
+    html += `<input type="checkbox" name="genre" value="${genre.id}">${genre.name}<br>`;
+
+    indice++;
+  });
+
+  html += `<br><input class="btn btn-secondary" type="submit" value="Go!"></fieldset></form></div><hr class="col-xs-12">`;
 
   return html;
 };

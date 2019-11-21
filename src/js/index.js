@@ -1,11 +1,9 @@
 import '../scss/style.scss';
 import '../../node_modules/jquery/dist/jquery.min';
 import '../../node_modules/bootstrap/dist/js/bootstrap.bundle.min';
-import axios from 'axios';
-import apiKey from './constants/apiKey';
-import urlAPI from './constants/urlAPI';
-import localLanguage from './constants/localLanguage';
+
 import searchArticles from './services/searchArticles';
+import genreList from "./services/listGenres";
 import articleSelected from './services/articleSelected';
 import latestArticles from './services/latestArticles';
 import articleByGenre from './services/articlesByGenre';
@@ -16,16 +14,22 @@ import showArticles from './services/showArticles';
 import showArticlesByDate from './services/showArticlesByDate';
 import showArticlesByGenre from './services/showArticlesByGenre';
 
+import {UrlParams} from "./services/urlParams";
+
 function filterClicked() {
   document.getElementById('filter').classList.add('filter-clicked');
-  document.getElementById('order').classList.remove('filter-clicked');
+  document.getElementById('order').classList.remove('order-clicked');
 
   document.getElementById('right-side-body').innerHTML = showArticlesByDate();
-  document.getElementById('right-side-body').innerHTML += showArticlesByGenre();
+
+  genreList((result) => {
+    document.getElementById('right-side-body').innerHTML += showArticlesByGenre(result);
+  });
+
 }
 
 function orderClicked() {
-  document.getElementById('order').classList.add('filter-clicked');
+  document.getElementById('order').classList.add('order-clicked');
   document.getElementById('filter').classList.remove('filter-clicked');
 
   document.getElementById('right-side-body').innerHTML = '';
@@ -48,43 +52,43 @@ newest((results) => {
 const search = searchArticles('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
 // const search = searchArticles();
 search('avengers', (results) => {
-  console.log(results);
+  //console.log(results);
 });
 
 const article = articleSelected('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
 // const search = articleSelected();
 article('299536', (results) => { // 393209
-  console.log(results);
+  //console.log(results);
 });
 
 const sortedList = articlesSorted('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
 // const search = articlesSorted();
 sortedList('asc', (results) => {
-  console.log(results);
+  //console.log(results);
 });
 
-const listByDate = articlesByDate('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
-// const search = articlesSorted();
-listByDate('1950', (results) => {
-  console.log(results);
-});
+// Si l'utilisateur a saisie une date de recherche
+if (UrlParams.UrlParamSearchByYear()) {
+  const searchedYear = UrlParams.UrlParamSearchByYear();
+  const listByDate = articlesByDate('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
+  // const search = articlesSorted();
+  listByDate(searchedYear, (results) => {
+    document.getElementById('left-side').innerHTML = showArticles(results);
+  });
+}
 
-// Tous les genres
-const genreList = () => (callBack) => {
-  const request = axios.get(`${urlAPI}/genre/movie/list?api_key=${apiKey}&language=${localLanguage}`);
-  request.then(
-    ({ data }) => callBack(data),
-  );
-};
-
-const listByGenre = articleByGenre('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
-// const search = articleByGenre();
-listByGenre(['12'], (results) => {
-  console.log(results);
-});
+// Si l'utilisateur a choché un (ou plusieurs) genre(s) en particulier
+if (UrlParams.UrlParamSearchByGenre()) {
+  const searchedGenres = UrlParams.UrlParamSearchByGenre();
+  const listByGenre = articleByGenre('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
+  // const search = articleByGenre();
+  listByGenre(searchedGenres, (results) => {
+    document.getElementById('left-side').innerHTML = showArticles(results);
+  });
+}
 
 const listByDuration = articlesByDuration('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
 // const search = articlesSorted();
 listByDuration('80', (results) => {
-  console.log(results);
+  //console.log(results);
 });

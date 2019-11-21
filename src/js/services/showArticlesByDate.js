@@ -1,12 +1,14 @@
-// la fonction showArticlesByDate récupère des données par date recherchée
+// la fonction showArticlesByDate récupère la date de recherche saisie par l'utilisateur
 const showArticlesByDate = () => {
   let html = '';
   html += `
       <div class="input-group">
-          <input type="text" class="form-control" placeholder="Year...">
+        <form id="formSearcheByDate">
+          <input id="searchYear" name="searchYear" type="text" class="form-control" placeholder="Year...">
           <span class="input-group-btn">
-              <button class="btn btn-secondary" type="button">Go!</button>
+              <input class="btn btn-secondary" type="submit" value="Go!">
           </span>
+         </form>
       </div>
       <hr class="col-xs-12">
   `;

@@ -37,14 +37,14 @@ form {
     cursor: pointer;
   }
 
-  .filter-not-clicked {
+  .filter-not-clicked, .order-not-clicked {
     color: black;
     &:hover {
       color: #ffffff;
     }
   }
 
-  .filter-clicked {
+  .filter-clicked, .order-clicked {
     background-color: #28a745;
     color: #ffffff;
   }
