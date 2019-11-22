@@ -34,7 +34,19 @@ function orderClicked() {
   document.getElementById('order').classList.add('order-clicked');
   document.getElementById('filter').classList.remove('filter-clicked');
 
-  document.getElementById('right-side-body').innerHTML = '';
+  let orderBy;
+  // On récupère le <span> en lien avec le bouton 'Order'
+  const ascOrDesc = document.getElementById('ascOrDesc');
+  // A chaque clique de l'utilisateur on ajoute ou retire à ce <span> une classe
+  ascOrDesc.classList.toggle('asc');
+  // Si la existe notre variable 'orderBy' prend la valeur 'asc' sinon elle prend la valeur 'desc'
+  ascOrDesc.classList.contains("asc") ? orderBy = 'asc' : orderBy = 'desc';
+
+  const sortedList = articlesSorted('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
+  // const search = articlesSorted();
+  sortedList(orderBy, (results) => {
+    document.getElementById('left-side').innerHTML = showArticles(results);
+  });
 }
 
 document.getElementById('filter').onclick = () => {
@@ -77,12 +89,6 @@ if (UrlParams.UrlParamSearchByName()) { // Si l'utilisateur a saisie un nom de f
 const article = articleSelected('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
 // const search = articleSelected();
 article('299536', (results) => { // 393209
-  // console.log(results);
-});
-
-const sortedList = articlesSorted('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
-// const search = articlesSorted();
-sortedList('asc', (results) => {
   // console.log(results);
 });
 
