@@ -5,7 +5,7 @@ export class UrlParams {
   }
 
   static UrlParamSearchByYear() {
-    return this.Url().searchParams.get("searchYear");
+    return this.Url().searchParams.get('searchYear');
   }
 
   static UrlParamSearchByGenre() {
