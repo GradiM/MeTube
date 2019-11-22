@@ -4,6 +4,10 @@ export class UrlParams {
     return new URL(window.location.href);
   }
 
+  static UrlParamSearchByName() {
+    return this.Url().searchParams.get('searchName');
+  }
+
   static UrlParamSearchByYear() {
     return this.Url().searchParams.get('searchYear');
   }

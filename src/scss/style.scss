@@ -4,7 +4,8 @@ body {
   padding-top: 56px;
 }
 
-form {
+.search-bar-container {
+  height: calc(1.5em + 0.75rem + 12px);
   .input-group {
     width: 98%;
   }
