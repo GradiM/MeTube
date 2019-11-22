@@ -40,7 +40,7 @@ function orderClicked() {
   // A chaque clique de l'utilisateur on ajoute ou retire à ce <span> une classe
   ascOrDesc.classList.toggle('asc');
   // Si la existe notre variable 'orderBy' prend la valeur 'asc' sinon elle prend la valeur 'desc'
-  ascOrDesc.classList.contains("asc") ? orderBy = 'asc' : orderBy = 'desc';
+  ascOrDesc.classList.contains('asc') ? orderBy = 'asc' : orderBy = 'desc';
 
   const sortedList = articlesSorted('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
   // const search = articlesSorted();
