@@ -1,5 +1,4 @@
-// Cette classe contient les paramètres de l'url
-export class UrlParams {
+export default class UrlParams { // Cette classe contient les paramètres de l'url
   static Url() {
     return new URL(window.location.href);
   }

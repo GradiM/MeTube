@@ -15,9 +15,7 @@ import showArticlesByDate from './services/showArticlesByDate';
 import showArticlesByGenre from './services/showArticlesByGenre';
 import showArticlesBySearch from './services/showArticlesBySearch';
 
-import { UrlParams } from './services/urlParams';
-import paginationNewer from "./services/paginationNewer";
-import paginationOlder from "./services/paginationOlder";
+import UrlParams from './services/urlParams';
 
 document.getElementById('global-search-bar').innerHTML = showArticlesBySearch();
 
@@ -44,9 +42,7 @@ document.getElementById('filter').onclick = () => {
 };
 
 
-
 if (UrlParams.UrlParamSearchByName()) { // Si l'utilisateur a saisie un nom de film
-
   const searchedName = UrlParams.UrlParamSearchByName();
 
   const search = searchArticles('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
@@ -54,9 +50,7 @@ if (UrlParams.UrlParamSearchByName()) { // Si l'utilisateur a saisie un nom de f
   search(searchedName, (results) => {
     document.getElementById('left-side').innerHTML = showArticles(results);
   });
-
 } else if (UrlParams.UrlParamSearchByYear()) { // Si l'utilisateur a saisie une date de recherche
-
   const searchedYear = UrlParams.UrlParamSearchByYear();
 
   const listByDate = articlesByDate('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
@@ -67,9 +61,7 @@ if (UrlParams.UrlParamSearchByName()) { // Si l'utilisateur a saisie un nom de f
 
   // Lorsque l'utilisateur clique sur le boutton du tri
   orderClicked(listByDate, searchedYear);
-
 } else if (UrlParams.UrlParamSearchByGenre()) { // Si l'utilisateur a choché un (ou plusieurs) genre(s) en particulier
-
   const searchedGenres = UrlParams.UrlParamSearchByGenre();
 
   const listByGenre = articleByGenre('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
@@ -80,15 +72,13 @@ if (UrlParams.UrlParamSearchByName()) { // Si l'utilisateur a saisie un nom de f
 
   // Lorsque l'utilisateur clique sur le boutton du tri
   orderClicked(listByGenre, searchedGenres);
-
 } else { // Par défaut on affiche les films les plus récents
-
   const newest = latestArticles('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
   // const newest = latestArticles();
   newest(null, (results) => {
     document.getElementById('left-side').innerHTML = showArticles(results);
 
-    /*document.getElementById('pagination').innerHTML = paginationOlder();
+    /* document.getElementById('pagination').innerHTML = paginationOlder();
     document.getElementById('pagination').innerHTML += paginationNewer();
 
     function olderPageClicked(numberPage) {
@@ -113,12 +103,11 @@ if (UrlParams.UrlParamSearchByName()) { // Si l'utilisateur a saisie un nom de f
 
     document.getElementById('newerPage').onclick = () => {
       newerPageClicked(results.page);
-    };*/
+    }; */
   });
 
   // Lorsque l'utilisateur clique sur le boutton du tri
   orderClicked(newest);
-
 }
 
 const article = articleSelected('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');

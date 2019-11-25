@@ -16,10 +16,10 @@ const showArticles = (data) => {
                  
                   </div>
                   <div class="col-lg-6">
-                      ${article.original_title == article.title
-      ? `<h5>${article.title}</h5>`
-      : `<h5>${article.original_title}</h5><span class="font-italic">${article.title}</span>`
-    }
+                      ${article.original_title === article.title
+    ? `<h5>${article.title}</h5>`
+    : `<h5>${article.original_title}</h5><span class="font-italic">${article.title}</span>`
+}
                       <div>
                           <p>${article.release_date.substr(0, 4)}</p>
                       </div>
