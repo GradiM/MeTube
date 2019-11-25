@@ -1,3 +1,3 @@
-const showPageTitle = (titleValue) => { return titleValue };
+const showPageTitle = (titleValue) => titleValue;
 
 export default showPageTitle;

@@ -16,7 +16,7 @@ import showArticlesByGenre from './services/showArticlesByGenre';
 import showArticlesBySearch from './services/showArticlesBySearch';
 
 import UrlParams from './services/urlParams';
-import showPageTitle from "./services/showPageTitle";
+import showPageTitle from './services/showPageTitle';
 
 document.getElementById('global-search-bar').innerHTML = showArticlesBySearch();
 
@@ -82,10 +82,10 @@ if (UrlParams.UrlParamSearchByName()) { // Si l'utilisateur a saisie un nom de f
       searchedGenres.forEach((idGenre) => {
         // On cherche dans la liste de tous les genres
         // S'il y a le genre séléctioné par l'utilisateur, on l'ajout à notre variable
-        if(genre.id === +idGenre) {
-          genresName.push(genre.name)
+        if (genre.id === +idGenre) {
+          genresName.push(genre.name);
         }
-      })
+      });
     });
 
     genresName = genresName.join(', ');
