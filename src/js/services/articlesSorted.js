@@ -17,15 +17,17 @@ const articlesSorted = (articlesList, firstFilterParameter, secondFilterParamete
   const ascOrDesc = document.getElementById('ascOrDesc');
   // A chaque clique de l'utilisateur on ajoute ou retire à ce <span> une classe
   ascOrDesc.classList.toggle('asc');
-  // Si la existe notre variable 'orderBy' prend la valeur 'asc' sinon elle prend la valeur 'desc'
+  // Si la classe css 'asc' existe
+  // notre variable 'orderBy' prend la valeur 'asc' sinon elle prend la valeur 'desc'
   ascOrDesc.classList.contains('asc') ? orderBy = 'asc' : orderBy = 'desc';
 
-  if (secondFilterParameter) {console.log(secondFilterParameter);
+  if (secondFilterParameter) {
+    console.log(secondFilterParameter);
     articlesList(orderBy, firstFilterParameter, secondFilterParameter, (results) => {
       document.getElementById('left-side').innerHTML = showArticles(results);
     });
-  }
-  else if (firstFilterParameter) {console.log(firstFilterParameter);
+  } else if (firstFilterParameter) {
+    console.log(firstFilterParameter);
     articlesList(orderBy, firstFilterParameter, (results) => {
       document.getElementById('left-side').innerHTML = showArticles(results);
     });

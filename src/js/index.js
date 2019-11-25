@@ -17,7 +17,7 @@ import showArticlesBySearch from './services/showArticlesBySearch';
 
 import UrlParams from './services/urlParams';
 import showPageTitle from './services/showPageTitle';
-import showArticlesByDuration from "./services/showAticlesByDuration";
+import showArticlesByDuration from './services/showAticlesByDuration';
 
 document.getElementById('global-search-bar').innerHTML = showArticlesBySearch();
 
@@ -26,10 +26,10 @@ function orderClicked(articlesList, firstFilterParameter = null, secondFilterPar
     document.getElementById('order').classList.add('order-clicked');
     document.getElementById('order').classList.remove('order-not-clicked');
     document.getElementById('filter').classList.remove('filter-clicked');
-    /*document.getElementById('right-side-body').innerHTML = '';
-    document.getElementById('filter').classList.add('filter-not-clicked');*/
+    /* document.getElementById('right-side-body').innerHTML = '';
+    document.getElementById('filter').classList.add('filter-not-clicked'); */
 
-      articlesSorted(articlesList, firstFilterParameter, secondFilterParameter);
+    articlesSorted(articlesList, firstFilterParameter, secondFilterParameter);
   };
 }
 
