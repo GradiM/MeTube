@@ -17,11 +17,22 @@ function dateNow() {
   return `${year}-${month}-${day}`;
 }
 
+function firstDateOfYear() {
+  const date = new Date();
+  const year = date.getFullYear();
+
+  return `${year}-01-01`;
+}
+
 // Tous les films (les plus récents)
-const latestArticles = (urlAPI, apiKey) => (callBack) => {
-  // const currentYear = new Date().getFullYear();
-  const request = axios.get(`${urlAPI}/discover/movie?&api_key=${apiKey}&language=en-EN&sort_by=release_date.desc&include_adult=false&include_video=false&page=1&release_date.lte=${dateNow()}`);
-  request.then(({ data }) => callBack(data));
+const latestArticles = (urlAPI, apiKey) => (sorted, callBack) => {
+  if (!sorted) {
+    const request = axios.get(`${urlAPI}/discover/movie?&api_key=${apiKey}&language=en-EN&sort_by=release_date.desc&include_adult=false&include_video=false&page=1&primary_release_date.lte=${dateNow()}`);
+    request.then(({ data }) => callBack(data));
+  } else {
+    const request = axios.get(`${urlAPI}/discover/movie?&api_key=${apiKey}&language=en-EN&sort_by=primary_release_date.${sorted}&include_adult=false&include_video=false&page=1&primary_release_date.gte=${firstDateOfYear()}&primary_release_date.lte=${dateNow()}`);
+    request.then(({ data }) => callBack(data));
+  }
 };
 
 /* // Tous les films (les plus récents)

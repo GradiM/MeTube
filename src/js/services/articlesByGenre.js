@@ -4,10 +4,16 @@ import apiKey from "../constants/apiKey";
 import localLanguage from "../constants/localLanguage"; */
 
 // Tous les films par genres, par ordre alphabetique
-const articleByGenre = (urlAPI, apiKey) => (genreId, callBack) => {
-  const genres = genreId.join(',');
-  const request = axios.get(`${urlAPI}/discover/movie?api_key=${apiKey}&language=en-EN&sort_by=original_title.asc&include_adult=false&include_video=false&page=1&with_genres=${genres}`);
-  request.then(({ data }) => callBack(data));
+const articleByGenre = (urlAPI, apiKey) => (sorted, genreId, callBack) => {
+  if (!sorted) {
+    const genres = genreId.join(',');
+    const request = axios.get(`${urlAPI}/discover/movie?api_key=${apiKey}&language=en-EN&sort_by=original_title.asc&include_adult=false&include_video=false&page=1&with_genres=${genres}`);
+    request.then(({ data }) => callBack(data));
+  } else {
+    const genres = genreId.join(',');
+    const request = axios.get(`${urlAPI}/discover/movie?api_key=${apiKey}&language=en-EN&sort_by=original_title.${sorted}&include_adult=false&include_video=false&page=1&with_genres=${genres}`);
+    request.then(({ data }) => callBack(data));
+  }
 };
 
 /* // Tous les films par genres, par ordre alphabetique
