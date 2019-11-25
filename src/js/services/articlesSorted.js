@@ -11,7 +11,7 @@ const articlesSorted = (urlAPI, apiKey) => (order, callBack) => {
   request.then(({data}) => callBack(data));
 }; */
 
-const articlesSorted = (articlesList, filterParameter) => {
+const articlesSorted = (articlesList, firstFilterParameter, secondFilterParameter) => {
   let orderBy;
   // On récupère le <span> en lien avec le bouton 'Order'
   const ascOrDesc = document.getElementById('ascOrDesc');
@@ -20,12 +20,17 @@ const articlesSorted = (articlesList, filterParameter) => {
   // Si la existe notre variable 'orderBy' prend la valeur 'asc' sinon elle prend la valeur 'desc'
   ascOrDesc.classList.contains('asc') ? orderBy = 'asc' : orderBy = 'desc';
 
-  if (!filterParameter) {
-    articlesList(orderBy, (results) => {
+  if (secondFilterParameter) {console.log(secondFilterParameter);
+    articlesList(orderBy, firstFilterParameter, secondFilterParameter, (results) => {
+      document.getElementById('left-side').innerHTML = showArticles(results);
+    });
+  }
+  else if (firstFilterParameter) {console.log(firstFilterParameter);
+    articlesList(orderBy, firstFilterParameter, (results) => {
       document.getElementById('left-side').innerHTML = showArticles(results);
     });
   } else {
-    articlesList(orderBy, filterParameter, (results) => {
+    articlesList(orderBy, (results) => {
       document.getElementById('left-side').innerHTML = showArticles(results);
     });
   }

@@ -14,7 +14,18 @@ export default class UrlParams { // Cette classe contient les paramètres de l'u
   static UrlParamSearchByGenre() {
     const params = this.Url().search; // format : ?genre=28&genre36
 
-    // Donc on récupère uniquement les entiers (qui sont automatiquement mis dans un tableau)
-    return params.match(/\d+/g);// /([^genre=])\d+/g
+    if(params.includes('genre=')) {
+      // Donc on récupère uniquement les entiers (qui sont automatiquement mis dans un tableau)
+      return params.match(/\d+/g);// /([^genre=])\d+/g
+    }
+  }
+
+  static UrlParamSearchByDuration() {
+    const param = this.Url().search; // format : ?genre=28&genre36
+
+    if(param.includes('durationMax=')) {
+      // Donc on récupère uniquement les entiers (qui sont automatiquement mis dans un tableau)
+      return param.match(/\d+/g);
+    }
   }
 }

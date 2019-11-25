@@ -17,16 +17,19 @@ import showArticlesBySearch from './services/showArticlesBySearch';
 
 import UrlParams from './services/urlParams';
 import showPageTitle from './services/showPageTitle';
+import showArticlesByDuration from "./services/showAticlesByDuration";
 
 document.getElementById('global-search-bar').innerHTML = showArticlesBySearch();
 
-function orderClicked(articlesList, filterParameter = null) {
+function orderClicked(articlesList, firstFilterParameter = null, secondFilterParameter = null) {
   document.getElementById('order').onclick = () => {
     document.getElementById('order').classList.add('order-clicked');
     document.getElementById('order').classList.remove('order-not-clicked');
     document.getElementById('filter').classList.remove('filter-clicked');
+    /*document.getElementById('right-side-body').innerHTML = '';
+    document.getElementById('filter').classList.add('filter-not-clicked');*/
 
-    articlesSorted(articlesList, filterParameter);
+      articlesSorted(articlesList, firstFilterParameter, secondFilterParameter);
   };
 }
 
@@ -40,6 +43,8 @@ document.getElementById('filter').onclick = () => {
   genreList((result) => {
     document.getElementById('right-side-body').innerHTML += showArticlesByGenre(result);
   });
+
+  document.getElementById('right-side-body').innerHTML += showArticlesByDuration();
 };
 
 
@@ -101,6 +106,23 @@ if (UrlParams.UrlParamSearchByName()) { // Si l'utilisateur a saisie un nom de f
 
   // Lorsque l'utilisateur clique sur le boutton du tri
   orderClicked(listByGenre, searchedGenres);
+} else if (UrlParams.UrlParamSearchByDuration()) { // Si l'utilisateur a choisi une tranche de durée
+  const durationMaxMinuteFormat = +UrlParams.UrlParamSearchByDuration();
+  const durationMinMinuteFormat = durationMaxMinuteFormat - 30;
+
+  const durationMaxHourFormat = durationMaxMinuteFormat / 60;
+  const durationMinHourFormat = durationMinMinuteFormat / 60;
+
+  document.getElementById('page-title').innerHTML = showPageTitle(`Movies duration : ${durationMinHourFormat}h to ${durationMaxHourFormat}h`);
+
+  const listByDuration = articlesByDuration('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
+  // const search = articlesSorted();
+  listByDuration(null, durationMinMinuteFormat, durationMaxMinuteFormat, (results) => {
+    document.getElementById('left-side').innerHTML = showArticles(results);
+  });
+
+  // Lorsque l'utilisateur clique sur le boutton du tri
+  orderClicked(listByDuration, durationMinMinuteFormat, durationMaxMinuteFormat);
 } else { // Par défaut on affiche les films les plus récents
   document.getElementById('page-title').innerHTML = showPageTitle('The latest movie');
 
@@ -108,33 +130,6 @@ if (UrlParams.UrlParamSearchByName()) { // Si l'utilisateur a saisie un nom de f
   // const newest = latestArticles();
   newest(null, (results) => {
     document.getElementById('left-side').innerHTML = showArticles(results);
-
-    /* document.getElementById('pagination').innerHTML = paginationOlder();
-    document.getElementById('pagination').innerHTML += paginationNewer();
-
-    function olderPageClicked(numberPage) {
-      numberPage --;
-    }
-
-    function newerPageClicked(numberPage) {
-      numberPage ++;
-      const newest = latestArticles('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634', numberPage);
-      // const newest = latestArticles();
-      newest((results) => {
-        document.getElementById('left-side').innerHTML = showArticles(results);
-
-        document.getElementById('pagination').innerHTML = paginationOlder();
-        document.getElementById('pagination').innerHTML += paginationNewer();
-      });
-    }
-
-    document.getElementById('olderPage').onclick = () => {
-      olderPageClicked(results.page);
-    };
-
-    document.getElementById('newerPage').onclick = () => {
-      newerPageClicked(results.page);
-    }; */
   });
 
   // Lorsque l'utilisateur clique sur le boutton du tri
@@ -144,11 +139,5 @@ if (UrlParams.UrlParamSearchByName()) { // Si l'utilisateur a saisie un nom de f
 const article = articleSelected('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
 // const search = articleSelected();
 article('299536', (results) => { // 393209
-  // console.log(results);
-});
-
-const listByDuration = articlesByDuration('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
-// const search = articlesSorted();
-listByDuration('80', (results) => {
   // console.log(results);
 });
