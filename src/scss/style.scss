@@ -31,11 +31,21 @@ body {
 .right-side {
   margin-top: 4.5rem!important;
 
+  #order {
+    width: 100%;
+    &:disabled {
+      &:hover {
+        color: initial;
+      }
+    }
+  }
+
+  #filter {
+    width: 100%;
+  }
+
   .btn {
-    display: block;
     border: none;
-    font-weight: initial;
-    cursor: pointer;
   }
 
   .filter-not-clicked, .order-not-clicked {
