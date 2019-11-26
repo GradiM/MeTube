@@ -4,6 +4,19 @@ body {
   padding-top: 56px;
 }
 
+a {
+  color: #a09e9e;
+  &:hover {
+    color: #d96f6f;
+    text-decoration: none;
+  }
+}
+
+.img-none {
+  color: #e5e6e8;
+  font-size: 200px;
+}
+
 .search-bar-container {
   height: calc(1.5em + 0.75rem + 12px);
   .input-group {
@@ -66,10 +79,17 @@ body {
 }
 
 #left-side {
+  a {
+    color: #212529;
+    &.btn {
+      color: #ffffff;
+    }
+  }
   .card-img-top {
     height: 25rem;
   }
   .img-none {
+    color: #e5e6e8;
     font-size: 200px;
   }
 }

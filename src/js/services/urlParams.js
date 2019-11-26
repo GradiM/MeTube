@@ -22,12 +22,10 @@ export default class UrlParams { // Cette classe contient les paramètres de l'u
   }
 
   static UrlParamSearchByDuration() {
-    const param = this.Url().search; // format : ?genre=28&genre36
+    return this.Url().searchParams.get('durationMax');
+  }
 
-    if (param.includes('durationMax=')) {
-      // Donc on récupère uniquement les entiers (qui sont automatiquement mis dans un tableau)
-      return param.match(/\d+/g);
-    }
-    return false;
+  static UrlParamSearchBySelectedArticle() {
+    return this.Url().searchParams.get('movie');
   }
 }

@@ -1,5 +1,5 @@
 // Cette fonction convertit les minutes (passées en paramètre) en heures + minutes
-const hourConvertToHourMinute = (runtime) => {
+const timeConvertToHourMinute = (runtime) => {
   const hours = (runtime / 60);
   const runTimeHours = Math.floor(hours);
 
@@ -14,4 +14,4 @@ const hourConvertToHourMinute = (runtime) => {
   return `${runTimeHours}h${runTimeMinutes}`;
 };
 
-export default hourConvertToHourMinute;
+export default timeConvertToHourMinute;

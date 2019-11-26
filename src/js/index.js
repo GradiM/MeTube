@@ -14,131 +14,139 @@ import showArticles from './services/showArticles';
 import showArticlesByDate from './services/showArticlesByDate';
 import showArticlesByGenre from './services/showArticlesByGenre';
 import showArticlesBySearch from './services/showArticlesBySearch';
-
-import UrlParams from './services/urlParams';
 import showPageTitle from './services/showPageTitle';
 import showArticlesByDuration from './services/showAticlesByDuration';
-import hourConvertToHourMinute from './services/hourConvertToHourMinute';
+import showArticle from "./services/showArticle";
 
-document.getElementById('global-search-bar').innerHTML = showArticlesBySearch();
+import UrlParams from './services/urlParams';
 
-function orderClicked(articlesList, firstFilterParameter = null, secondFilterParameter = null) {
-  document.getElementById('order').onclick = () => {
-    document.getElementById('order').classList.add('order-clicked');
-    document.getElementById('order').classList.remove('order-not-clicked');
-    document.getElementById('filter').classList.remove('filter-clicked');
-    /* document.getElementById('right-side-body').innerHTML = '';
-    document.getElementById('filter').classList.add('filter-not-clicked'); */
+import timeConvertToHourMinute from './services/timeConvertToHourMinute';
 
-    articlesSorted(articlesList, firstFilterParameter, secondFilterParameter);
-  };
-}
+if(UrlParams.Url().pathname === '/' || UrlParams.Url().pathname === '/index.html') {
+  document.getElementById('global-search-bar').innerHTML = showArticlesBySearch();
 
-document.getElementById('filter').onclick = () => {
-  document.getElementById('filter').classList.add('filter-clicked');
-  document.getElementById('filter').classList.remove('filter-not-clicked');
-  document.getElementById('order').classList.remove('order-clicked');
+  function orderClicked(articlesList, firstFilterParameter = null, secondFilterParameter = null) {
+    document.getElementById('order').onclick = () => {
+      document.getElementById('order').classList.add('order-clicked');
+      document.getElementById('order').classList.remove('order-not-clicked');
+      document.getElementById('filter').classList.remove('filter-clicked');
+      /* document.getElementById('right-side-body').innerHTML = '';
+      document.getElementById('filter').classList.add('filter-not-clicked'); */
 
-  document.getElementById('right-side-body').innerHTML = showArticlesByDate();
+      articlesSorted(articlesList, firstFilterParameter, secondFilterParameter);
+    };
+  }
 
-  genreList((result) => {
-    document.getElementById('right-side-body').innerHTML += showArticlesByGenre(result);
-  });
+  document.getElementById('filter').onclick = () => {
+    document.getElementById('filter').classList.add('filter-clicked');
+    document.getElementById('filter').classList.remove('filter-not-clicked');
+    document.getElementById('order').classList.remove('order-clicked');
 
-  document.getElementById('right-side-body').innerHTML += showArticlesByDuration();
-};
+    document.getElementById('right-side-body').innerHTML = showArticlesByDate();
 
-
-if (UrlParams.UrlParamSearchByName()) { // Si l'utilisateur a saisie un nom de film
-  const searchedName = UrlParams.UrlParamSearchByName();
-
-  document.getElementById('page-title').innerHTML = showPageTitle(`Search for : ${searchedName}`);
-
-  const search = searchArticles('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
-  // const search = searchArticles();
-  search(searchedName, (results) => {
-    document.getElementById('left-side').innerHTML = showArticles(results);
-  });
-
-  document.getElementById('order').disabled = true;
-} else if (UrlParams.UrlParamSearchByYear()) { // Si l'utilisateur a saisie une date de recherche
-  const searchedYear = UrlParams.UrlParamSearchByYear();
-
-  document.getElementById('page-title').innerHTML = showPageTitle(`Movies in ${searchedYear}`);
-
-  const listByDate = articlesByDate('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
-  // const search = articlesSorted();
-  listByDate(null, searchedYear, (results) => {
-    document.getElementById('left-side').innerHTML = showArticles(results);
-  });
-
-  // Lorsque l'utilisateur clique sur le boutton du tri
-  orderClicked(listByDate, searchedYear);
-} else if (UrlParams.UrlParamSearchByGenre()) { // Si l'utilisateur a choché un (ou plusieurs) genre(s) en particulier
-  const searchedGenres = UrlParams.UrlParamSearchByGenre();
-
-  // On liste tous les genres
-  genreList((result) => {
-    let genresName = [];
-
-    // On parcours la liste de tous les genres
-    result.genres.forEach((genre) => {
-      // On parcours l'array contenant les genres séléctioné par l'uilisateur
-      // On execute cette étape autant de fois qu'il y a de genre séléctioné par l'utilisateur
-      searchedGenres.forEach((idGenre) => {
-        // On cherche dans la liste de tous les genres
-        // S'il y a le genre séléctioné par l'utilisateur, on l'ajout à notre variable
-        if (genre.id === +idGenre) {
-          genresName.push(genre.name);
-        }
-      });
+    genreList((result) => {
+      document.getElementById('right-side-body').innerHTML += showArticlesByGenre(result);
     });
 
-    genresName = genresName.join(', ');
+    document.getElementById('right-side-body').innerHTML += showArticlesByDuration();
+  };
 
-    document.getElementById('page-title').innerHTML = showPageTitle(`Categorie : ${genresName}`);
-  });
 
-  const listByGenre = articleByGenre('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
-  // const search = articleByGenre();
-  listByGenre(null, searchedGenres, (results) => {
-    document.getElementById('left-side').innerHTML = showArticles(results);
-  });
+  if (UrlParams.UrlParamSearchByName()) { // Si l'utilisateur a saisie un nom de film
+    const searchedName = UrlParams.UrlParamSearchByName();
 
-  // Lorsque l'utilisateur clique sur le boutton du tri
-  orderClicked(listByGenre, searchedGenres);
-} else if (UrlParams.UrlParamSearchByDuration()) { // Si l'utilisateur a choisi une tranche de durée
-  const durationMaxMinuteFormat = +UrlParams.UrlParamSearchByDuration();
-  const durationMinMinuteFormat = durationMaxMinuteFormat - 30;
+    document.getElementById('page-title').innerHTML = showPageTitle(`Search for : ${searchedName}`);
 
-  const durationMaxHourFormat = hourConvertToHourMinute(durationMaxMinuteFormat);
-  const durationMinHourFormat = hourConvertToHourMinute(durationMinMinuteFormat);
+    const search = searchArticles('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
+    // const search = searchArticles();
+    search(searchedName, (results) => {
+      document.getElementById('left-side').innerHTML = showArticles(results);
+    });
 
-  document.getElementById('page-title').innerHTML = showPageTitle(`Movies duration : ${durationMinHourFormat} to ${durationMaxHourFormat}`);
+    document.getElementById('order').disabled = true;
+  } else if (UrlParams.UrlParamSearchByYear()) { // Si l'utilisateur a saisie une date de recherche
+    const searchedYear = UrlParams.UrlParamSearchByYear();
 
-  const listByDuration = articlesByDuration('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
-  // const search = articlesSorted();
-  listByDuration(null, durationMinMinuteFormat, durationMaxMinuteFormat, (results) => {
-    document.getElementById('left-side').innerHTML = showArticles(results);
-  });
+    document.getElementById('page-title').innerHTML = showPageTitle(`Movies in ${searchedYear}`);
 
-  // Lorsque l'utilisateur clique sur le boutton du tri
-  orderClicked(listByDuration, durationMinMinuteFormat, durationMaxMinuteFormat);
-} else { // Par défaut on affiche les films les plus récents
-  document.getElementById('page-title').innerHTML = showPageTitle('The latest movie');
+    const listByDate = articlesByDate('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
+    // const search = articlesSorted();
+    listByDate(null, searchedYear, (results) => {
+      document.getElementById('left-side').innerHTML = showArticles(results);
+    });
 
-  const newest = latestArticles('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
-  // const newest = latestArticles();
-  newest(null, (results) => {
-    document.getElementById('left-side').innerHTML = showArticles(results);
-  });
+    // Lorsque l'utilisateur clique sur le boutton du tri
+    orderClicked(listByDate, searchedYear);
+  } else if (UrlParams.UrlParamSearchByGenre()) { // Si l'utilisateur a choché un (ou plusieurs) genre(s) en particulier
+    const searchedGenres = UrlParams.UrlParamSearchByGenre();
 
-  // Lorsque l'utilisateur clique sur le boutton du tri
-  orderClicked(newest);
+    // On liste tous les genres
+    genreList((result) => {
+      let genresName = [];
+
+      // On parcours la liste de tous les genres
+      result.genres.forEach((genre) => {
+        // On parcours l'array contenant les genres séléctioné par l'uilisateur
+        // On execute cette étape autant de fois qu'il y a de genre séléctioné par l'utilisateur
+        searchedGenres.forEach((idGenre) => {
+          // On cherche dans la liste de tous les genres
+          // S'il y a le genre séléctioné par l'utilisateur, on l'ajout à notre variable
+          if (genre.id === +idGenre) {
+            genresName.push(genre.name);
+          }
+        });
+      });
+
+      genresName = genresName.join(', ');
+
+      document.getElementById('page-title').innerHTML = showPageTitle(`Categorie : ${genresName}`);
+    });
+
+    const listByGenre = articleByGenre('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
+    // const search = articleByGenre();
+    listByGenre(null, searchedGenres, (results) => {
+      document.getElementById('left-side').innerHTML = showArticles(results);
+    });
+
+    // Lorsque l'utilisateur clique sur le boutton du tri
+    orderClicked(listByGenre, searchedGenres);
+  } else if (UrlParams.UrlParamSearchByDuration()) { // Si l'utilisateur a choisi une tranche de durée
+    const durationMaxMinuteFormat = +UrlParams.UrlParamSearchByDuration();
+    const durationMinMinuteFormat = durationMaxMinuteFormat - 30;
+
+    const durationMaxHourFormat = timeConvertToHourMinute(durationMaxMinuteFormat);
+    const durationMinHourFormat = timeConvertToHourMinute(durationMinMinuteFormat);
+
+    document.getElementById('page-title').innerHTML = showPageTitle(`Movies duration : ${durationMinHourFormat} to ${durationMaxHourFormat}`);
+
+    const listByDuration = articlesByDuration('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
+    // const search = articlesSorted();
+    listByDuration(null, durationMinMinuteFormat, durationMaxMinuteFormat, (results) => {
+      document.getElementById('left-side').innerHTML = showArticles(results);
+    });
+
+    // Lorsque l'utilisateur clique sur le boutton du tri
+    orderClicked(listByDuration, durationMinMinuteFormat, durationMaxMinuteFormat);
+  } else { // Par défaut on affiche les films les plus récents
+    document.getElementById('page-title').innerHTML = showPageTitle('The latest movie');
+
+    const newest = latestArticles('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
+    // const newest = latestArticles();
+    newest(null, (results) => {
+      document.getElementById('left-side').innerHTML = showArticles(results);
+    });
+
+    // Lorsque l'utilisateur clique sur le boutton du tri
+    orderClicked(newest);
+  }
+} else if(UrlParams.Url().pathname === '/article.html') {
+  if (UrlParams.UrlParamSearchBySelectedArticle()) { // Si l'utilisateur a séléctioné un film
+    const selectedArticle = UrlParams.UrlParamSearchBySelectedArticle();
+    const article = articleSelected('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
+    // const search = articleSelected();
+    article(selectedArticle, (results) => { // 393209
+      console.log(results);
+      document.getElementById('article-container').innerHTML = showArticle(results);
+    });
+  }
 }
-
-const article = articleSelected('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
-// const search = articleSelected();
-article('299536', (results) => { // 393209
-  // console.log(results);
-});
