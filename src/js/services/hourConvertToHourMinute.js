@@ -8,11 +8,10 @@ const hourConvertToHourMinute = (runtime) => {
 
   if (runTimeHours === 0) {
     return `${runTimeMinutes}min`;
-  } else if (runTimeMinutes === 0) {
+  } if (runTimeMinutes === 0) {
     return `${runTimeHours}h`;
-  } else {
-    return `${runTimeHours}h${runTimeMinutes}`;
   }
+  return `${runTimeHours}h${runTimeMinutes}`;
 };
 
 export default hourConvertToHourMinute;

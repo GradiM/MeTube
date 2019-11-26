@@ -18,7 +18,7 @@ import showArticlesBySearch from './services/showArticlesBySearch';
 import UrlParams from './services/urlParams';
 import showPageTitle from './services/showPageTitle';
 import showArticlesByDuration from './services/showAticlesByDuration';
-import hourConvertToHourMinute from "./services/hourConvertToHourMinute";
+import hourConvertToHourMinute from './services/hourConvertToHourMinute';
 
 document.getElementById('global-search-bar').innerHTML = showArticlesBySearch();
 
