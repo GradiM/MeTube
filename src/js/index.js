@@ -18,6 +18,7 @@ import showArticlesBySearch from './services/showArticlesBySearch';
 import UrlParams from './services/urlParams';
 import showPageTitle from './services/showPageTitle';
 import showArticlesByDuration from './services/showAticlesByDuration';
+import hourConvertToHourMinute from "./services/hourConvertToHourMinute";
 
 document.getElementById('global-search-bar').innerHTML = showArticlesBySearch();
 
@@ -110,10 +111,10 @@ if (UrlParams.UrlParamSearchByName()) { // Si l'utilisateur a saisie un nom de f
   const durationMaxMinuteFormat = +UrlParams.UrlParamSearchByDuration();
   const durationMinMinuteFormat = durationMaxMinuteFormat - 30;
 
-  const durationMaxHourFormat = durationMaxMinuteFormat / 60;
-  const durationMinHourFormat = durationMinMinuteFormat / 60;
+  const durationMaxHourFormat = hourConvertToHourMinute(durationMaxMinuteFormat);
+  const durationMinHourFormat = hourConvertToHourMinute(durationMinMinuteFormat);
 
-  document.getElementById('page-title').innerHTML = showPageTitle(`Movies duration : ${durationMinHourFormat}h to ${durationMaxHourFormat}h`);
+  document.getElementById('page-title').innerHTML = showPageTitle(`Movies duration : ${durationMinHourFormat} to ${durationMaxHourFormat}`);
 
   const listByDuration = articlesByDuration('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
   // const search = articlesSorted();
