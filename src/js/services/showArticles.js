@@ -11,9 +11,9 @@ const showArticles = (data) => {
                   <div class="col-lg-6 text-center">
                     <a href="article.html?movie=${article.id}">
                       ${article.poster_path
-        ? `<img class="card-img-top" src="https://image.tmdb.org/t/p/w500/${article.poster_path}" alt="${article.title}'s image poster">`
-        : '<span class="img-none"><i class="far fa-image"></i></span>'
-    }
+    ? `<img class="card-img-top" src="https://image.tmdb.org/t/p/w500/${article.poster_path}" alt="${article.title}'s image poster">`
+    : '<span class="img-none"><i class="far fa-image"></i></span>'
+}
                     </a>
                   </div>
                   <div class="col-lg-6">
@@ -28,8 +28,8 @@ const showArticles = (data) => {
                     </div>
                     <div>
                       ${article.overview.length <= 125
-  ? `<p>${article.overview}</p>`
-  : `<p>${article.overview.substr(0, 125)}...</p>`
+    ? `<p>${article.overview}</p>`
+    : `<p>${article.overview.substr(0, 125)}...</p>`
 }
                     </div>
                   </div>

@@ -16,16 +16,16 @@ import showArticlesByGenre from './services/showArticlesByGenre';
 import showArticlesBySearch from './services/showArticlesBySearch';
 import showPageTitle from './services/showPageTitle';
 import showArticlesByDuration from './services/showAticlesByDuration';
-import showArticle from "./services/showArticle";
+import showArticle from './services/showArticle';
 
 import UrlParams from './services/urlParams';
 
 import timeConvertToHourMinute from './services/timeConvertToHourMinute';
 
-if(UrlParams.Url().pathname === '/' || UrlParams.Url().pathname === '/index.html') {
+if (UrlParams.Url().pathname === '/' || UrlParams.Url().pathname === '/index.html') {
   document.getElementById('global-search-bar').innerHTML = showArticlesBySearch();
 
-  function orderClicked(articlesList, firstFilterParameter = null, secondFilterParameter = null) {
+  const orderClicked = (articlesList, firstFilterParameter = null, secondFilterParameter = null) => {
     document.getElementById('order').onclick = () => {
       document.getElementById('order').classList.add('order-clicked');
       document.getElementById('order').classList.remove('order-not-clicked');
@@ -35,7 +35,7 @@ if(UrlParams.Url().pathname === '/' || UrlParams.Url().pathname === '/index.html
 
       articlesSorted(articlesList, firstFilterParameter, secondFilterParameter);
     };
-  }
+  };
 
   document.getElementById('filter').onclick = () => {
     document.getElementById('filter').classList.add('filter-clicked');
@@ -139,13 +139,12 @@ if(UrlParams.Url().pathname === '/' || UrlParams.Url().pathname === '/index.html
     // Lorsque l'utilisateur clique sur le boutton du tri
     orderClicked(newest);
   }
-} else if(UrlParams.Url().pathname === '/article.html') {
+} else if (UrlParams.Url().pathname === '/article.html') {
   if (UrlParams.UrlParamSearchBySelectedArticle()) { // Si l'utilisateur a séléctioné un film
     const selectedArticle = UrlParams.UrlParamSearchBySelectedArticle();
     const article = articleSelected('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
     // const search = articleSelected();
     article(selectedArticle, (results) => { // 393209
-      console.log(results);
       document.getElementById('article-container').innerHTML = showArticle(results);
     });
   }

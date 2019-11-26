@@ -22,12 +22,10 @@ const articlesSorted = (articlesList, firstFilterParameter, secondFilterParamete
   ascOrDesc.classList.contains('asc') ? orderBy = 'asc' : orderBy = 'desc';
 
   if (secondFilterParameter) {
-    console.log(secondFilterParameter);
     articlesList(orderBy, firstFilterParameter, secondFilterParameter, (results) => {
       document.getElementById('left-side').innerHTML = showArticles(results);
     });
   } else if (firstFilterParameter) {
-    console.log(firstFilterParameter);
     articlesList(orderBy, firstFilterParameter, (results) => {
       document.getElementById('left-side').innerHTML = showArticles(results);
     });

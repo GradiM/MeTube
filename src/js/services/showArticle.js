@@ -1,33 +1,25 @@
 // Affiche les articles
 // la fonction showArticles récupère des données en paramètre (variable "data")
-import timeConvertToHourMinute from "./timeConvertToHourMinute";
+import timeConvertToHourMinute from './timeConvertToHourMinute';
 
 const showArticle = (article) => {
   // On return un tableau contenant les genre
   // à l'aide de la fonction map
-  let genres = article.genres.map((genre) =>
-    `${genre.name}`
-  );
+  let genres = article.genres.map((genre) => `${genre.name}`);
   genres = genres.join(', ');
 
-  let productionsName = article.production_companies.map((production) =>
-      `${production.name}`
-  );
+  let productionsName = article.production_companies.map((production) => `${production.name}`);
   productionsName = productionsName.join(', ');
 
-  let productionsCountry = article.production_countries.map((country) =>
-    `${country.name}`
-  );
+  let productionsCountry = article.production_countries.map((country) => `${country.name}`);
   productionsCountry = productionsCountry.join(', ');
 
-  let productionsLogo = article.production_companies.map((production) =>
-    productionsLogo ? `<img style="width:55%;" src="https://image.tmdb.org/t/p/w500/${production.logo_path}" alt="${production.name}'s logo">` : ''
-  );
+  let productionsLogo = article.production_companies.map((production) => (productionsLogo ? `<img style="width:55%;" src="https://image.tmdb.org/t/p/w500/${production.logo_path}" alt="${production.name}'s logo">` : ''));
   productionsLogo = productionsLogo.join(' ');
 
   let html = '';
 
-    html += `
+  html += `
       <!-- Heading Row -->
       <div class="row align-items-center my-5">
           <div class="col-md-9">
@@ -41,18 +33,18 @@ const showArticle = (article) => {
       <div class="row align-items-center my-5">
           <div class="col-lg-4 text-center">
               ${article.poster_path
-      ? `<img class="img-fluid rounded mb-4 mb-lg-0" src="https://image.tmdb.org/t/p/w500/${article.poster_path}" alt="${article.title}'s image poster">`
-      : '<span class="img-none"><i class="far fa-image"></i></span>'
-    }
+    ? `<img class="img-fluid rounded mb-4 mb-lg-0" src="https://image.tmdb.org/t/p/w500/${article.poster_path}" alt="${article.title}'s image poster">`
+    : '<span class="img-none"><i class="far fa-image"></i></span>'
+}
           </div>
           <!-- /.col-lg-8 -->
           <div class="col-lg-8">
             <div class="row">
                 <div class="col-md-8">
                     ${article.original_title === article.title
-      ? `<h2 class="h2">${article.title}</h2>`
-      : `<h2 class="h2">${article.original_title}</h2><span class="font-italic">${article.title}</span>`
-    }
+    ? `<h2 class="h2">${article.title}</h2>`
+    : `<h2 class="h2">${article.original_title}</h2><span class="font-italic">${article.title}</span>`
+}
                 </div>
                 <div class="col-md-4">
                     <div class="position-absolute">
