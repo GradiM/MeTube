@@ -5,17 +5,15 @@ const showArticles = (data) => {
   // On boucle sur la propriété "results" de l'objet "data" qui contient nos données
   data.results.forEach((article) => {
     let overview;
-    // S'il y a un synopsis
-    article.overview
-      ?
-      // Si le synopsis n'est pas trop long
-      article.overview.length <= 125
-        ? overview = `${article.overview}`
-        // Si le synopsis est trop long
-        : overview = `${article.overview.substr(0, 125)}...`
-      // S'il n'y a pas de synopsis
-      :
-      overview = `Unknown plot`;
+    if (article.overview) { // S'il y a un synopsis
+      if (article.overview.length <= 125) { // Si le synopsis n'est pas trop long
+        overview = `${article.overview}`;
+      } else { // Si le synopsis est trop long
+        overview = `${article.overview.substr(0, 125)}...`;
+      }
+    } else { // S'il n'y a pas de synopsis
+      overview = 'Unknown plot';
+    }
 
     html += `
         <div class="card mb-4">

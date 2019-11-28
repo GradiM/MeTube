@@ -3,6 +3,17 @@
 import timeConvertToHourMinute from './timeConvertToHourMinute';
 
 const showArticle = (article) => {
+  let poster;
+  if (article.backdrop_path) { // Si c'est un poster au format Paysage
+    poster = `<img class="img-fluid rounded mb-4 mb-lg-0" src="https://image.tmdb.org/t/p/w500/${article.backdrop_path}" 
+                alt="${article.title}'s image poster">`;
+  } else if (article.poster_path) { // Sinon, si c'est un poster au format Portrait
+    poster = `<img class="img-fluid rounded mb-4 mb-lg-0" src="https://image.tmdb.org/t/p/w500/${article.poster_path}" 
+                alt="${article.title}'s image poster">`;
+  } else { // S'il n'y a pas de poster
+    poster = '<span class="img-none"><i class="far fa-image"></i></span>';
+  }
+
   // On return un tableau contenant les genre
   // à l'aide de la fonction map
   let genres = article.genres.map((genre) => `${genre.name}`);
@@ -17,9 +28,8 @@ const showArticle = (article) => {
   let productionsLogo = article.production_companies.map((production) => (production.logo_path ? `<img style="width:55%;" src="https://image.tmdb.org/t/p/w500/${production.logo_path}" alt="${production.name}'s logo">` : ''));
   productionsLogo = productionsLogo.join(' ');
 
-  let overview;
   // S'il y a un synopsis, on l'affiche. Sinon on écrit "Unknown plot"
-  article.overview ? overview = `${article.overview}` : overview = `Unknown plot`;
+  const overview = article.overview ? `${article.overview}` : 'Unknown plot';
 
   let html = '';
 
@@ -36,10 +46,7 @@ const showArticle = (article) => {
       <!-- Heading Row -->
       <div class="row align-items-center my-5">
           <div class="col-lg-4 text-center">
-              ${article.poster_path
-    ? `<img class="img-fluid rounded mb-4 mb-lg-0" src="https://image.tmdb.org/t/p/w500/${article.poster_path}" alt="${article.title}'s image poster">`
-    : '<span class="img-none"><i class="far fa-image"></i></span>'
-}
+              ${poster}
           </div>
           <!-- /.col-lg-8 -->
           <div class="col-lg-8">
