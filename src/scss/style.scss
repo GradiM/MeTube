@@ -1,13 +1,19 @@
 /*@import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";*/
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 body {
+  background-color: #15202b;
   padding-top: 56px;
+  color: #ffffff;
+}
+
+.text-fire-red {
+  color: #fe1b00;
 }
 
 a {
   color: #a09e9e;
   &:hover {
-    color: #d96f6f;
+    color: #ffffffbf;
     text-decoration: none;
   }
 }
@@ -17,10 +23,32 @@ a {
   font-size: 200px;
 }
 
+nav {
+  background-color: #15202b;
+  &.navbar-dark {
+    .navbar-brand {
+      color: #fe1b00;
+      &:hover, &:focus {
+        color: #fe1b00;
+      }
+    }
+  }
+
+  #searchName {
+    background-color: transparent;
+  }
+}
+
 .search-bar-container {
   height: calc(1.5em + 0.75rem + 12px);
   .input-group {
     width: 98%;
+  }
+}
+
+.form-check {
+  input[type="submit"] {
+    background-color: #fe1b00;
   }
 }
 
@@ -44,11 +72,24 @@ a {
 .right-side {
   margin-top: 4.5rem!important;
 
+  #filter, #order {
+    background-color: #fe1b00;
+    &:hover {
+      background-color: #218838;
+      border-color: #1e7e34;
+    }
+  }
+
+  #searchYear {
+    background-color: transparent;
+  }
+
   #order {
     width: 100%;
     &:disabled {
       &:hover {
-        color: initial;
+        background-color: #fe1b00;
+        color: #ffffff;
       }
     }
   }
@@ -61,16 +102,8 @@ a {
     border: none;
   }
 
-  .filter-not-clicked, .order-not-clicked {
-    color: black;
-    &:hover {
-      color: #ffffff;
-    }
-  }
-
   .filter-clicked, .order-clicked {
     background-color: #28a745;
-    color: #ffffff;
   }
 
   .form-check {
@@ -79,11 +112,8 @@ a {
 }
 
 #left-side {
-  a {
-    color: #212529;
-    &.btn {
-      color: #ffffff;
-    }
+  .card {
+    background-color: #15202b;
   }
   .card-img-top {
     height: 25rem;

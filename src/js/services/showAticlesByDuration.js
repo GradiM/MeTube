@@ -48,7 +48,7 @@ const showArticlesByDuration = () => {
             </label>
           </div>
           <br>
-          <input class="btn btn-secondary" type="submit" value="Go!">
+          <input class="btn btn-secondary" type="submit" value="OK">
       </form>
     </div>
     <hr class="col-xs-12">

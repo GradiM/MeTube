@@ -144,7 +144,7 @@ if (UrlParams.Url().pathname === '/' || UrlParams.Url().pathname === '/index.htm
     const selectedArticle = UrlParams.UrlParamSearchBySelectedArticle();
     const article = articleSelected('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
     // const search = articleSelected();
-    article(selectedArticle, (results) => { // 393209
+    article(selectedArticle, (results) => {
       document.getElementById('article-container').innerHTML = showArticle(results);
     });
   }

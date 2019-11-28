@@ -14,8 +14,12 @@ const showArticle = (article) => {
   let productionsCountry = article.production_countries.map((country) => `${country.name}`);
   productionsCountry = productionsCountry.join(', ');
 
-  let productionsLogo = article.production_companies.map((production) => (productionsLogo ? `<img style="width:55%;" src="https://image.tmdb.org/t/p/w500/${production.logo_path}" alt="${production.name}'s logo">` : ''));
+  let productionsLogo = article.production_companies.map((production) => (production.logo_path ? `<img style="width:55%;" src="https://image.tmdb.org/t/p/w500/${production.logo_path}" alt="${production.name}'s logo">` : ''));
   productionsLogo = productionsLogo.join(' ');
+
+  let overview;
+  // S'il y a un synopsis, on l'affiche. Sinon on écrit "Unknown plot"
+  article.overview ? overview = `${article.overview}` : overview = `Unknown plot`;
 
   let html = '';
 
@@ -23,7 +27,7 @@ const showArticle = (article) => {
       <!-- Heading Row -->
       <div class="row align-items-center my-5">
           <div class="col-md-9">
-              <h1 class="my-4">Movie's details</h1>
+              <h1 class="my-4 text-fire-red">Movie's details</h1>
           </div>
           <div class="col-md-3">${productionsLogo}</div>
       </div>
@@ -42,11 +46,11 @@ const showArticle = (article) => {
             <div class="row">
                 <div class="col-md-8">
                     ${article.original_title === article.title
-    ? `<h2 class="h2">${article.title}</h2>`
-    : `<h2 class="h2">${article.original_title}</h2><span class="font-italic">${article.title}</span>`
+    ? `<h2 class="h2 text-fire-red">${article.title}</h2>`
+    : `<h2 class="h2 text-fire-red">${article.original_title}</h2><span class="font-italic">${article.title}</span>`
 }
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 text-fire-red">
                     <div class="position-absolute">
                       <i class="fas fa-star"></i>
                       <i class="fas fa-star"></i>
@@ -68,11 +72,10 @@ const showArticle = (article) => {
                       <p>${article.release_date.substr(0, 4)} | ${timeConvertToHourMinute(article.runtime)}</p>
                   </div>
                   <div class="col-md-3">
-                      <p><span class="font-weight-bold">Popularity</span> ${Math.round(article.popularity)}%</p>
+                      <p><span class="text-fire-red font-weight-bold">Popularity</span> ${Math.round(article.popularity)}%</p>
                   </div>
               </div>
-              <p>${article.overview}</p>
-              <!--<a class="btn btn-primary float-right" href="#">Read more</a>-->
+              <p>${overview}</p>
           </div>
           <!-- /.col-md-4 -->
       </div>
@@ -80,21 +83,21 @@ const showArticle = (article) => {
   
       <div class="row align-items-center my-5">
           <div class="col-md-8">
-              <p><span class="font-weight-bold">Genre</span>: ${genres}</p>
-              <p><span class="font-weight-bold">Producer</span>: ${productionsName}</p>
+              <p><span class="text-fire-red font-weight-bold">Genre</span>: ${genres}</p>
+              <p><span class="text-fire-red font-weight-bold">Producer</span>: ${productionsName}</p>
           </div>
           <!-- /.col-lg-8 -->
           <div class="col-md-4">
               <div class="row my-5">
-                  <div class="col-lg-6">Popularity</div>
+                  <div class="col-lg-6"><span class="text-fire-red font-weight-bold">Popularity</span></div>
                   <div class="col-lg-6">${(article.popularity / 10).toFixed(1)}/10</div>
               </div>
               <div class="row my-5">
-                  <div class="col-lg-6">Votes average</div>
+                  <div class="col-lg-6"><span class="text-fire-red font-weight-bold">Votes average</span></div>
                   <div class="col-lg-6">${article.vote_average.toFixed(1)}/10</div>
               </div>
               <div class="row my-5">
-                  <div class="col-lg-6">Total votes</div>
+                  <div class="col-lg-6"><span class="text-fire-red font-weight-bold">Total votes</span></div>
                   <div class="col-lg-6">
                     ${article.vote_count}
                   </div>
@@ -107,34 +110,34 @@ const showArticle = (article) => {
       <div class="row align-items-center my-5">
           <div class="col-md-8">
               <div class="row my-5">
-                  <div class="col-lg-5"><span class="font-weight-bold">Status</span></div>
+                  <div class="col-lg-5"><span class="text-fire-red font-weight-bold">Status</span></div>
                   <div class="col-lg-5">${article.status}</div>
               </div>
   
               <div class="row my-5">
-                  <div class="col-lg-5"><span class="font-weight-bold">Budget</span></div>
+                  <div class="col-lg-5"><span class="text-fire-red font-weight-bold">Budget</span></div>
                   <div class="col-lg-5">$${article.budget}</div>
               </div>
   
               <div class="row my-5">
-                  <div class="col-lg-5"><span class="font-weight-bold">Box Office</span></div>
+                  <div class="col-lg-5"><span class="text-fire-red font-weight-bold">Box Office</span></div>
                   <div class="col-lg-5">$${article.revenue}</div>
               </div>
           </div>
           <!-- /.col-lg-8 -->
           <div class="col-md-4">
               <div class="row my-5">
-                  <div class="col-lg-5"><span class="font-weight-bold">Production</span></div>
+                  <div class="col-lg-5"><span class="text-fire-red font-weight-bold">Production</span></div>
                   <div class="col-lg-5">${productionsName}</div>
               </div>
   
               <div class="row my-5">
-                  <div class="col-lg-5"><span class="font-weight-bold">Website</span></div>
+                  <div class="col-lg-5"><span class="text-fire-red font-weight-bold">Website</span></div>
                     ${article.homepage ? `<div class="col-lg-5"><a href="${article.homepage}" target="_blank">Click here</a></div>` : ''}
               </div>
   
               <div class="row my-5">
-                  <div class="col-lg-5"><span class="font-weight-bold">Country</span></div>
+                  <div class="col-lg-5"><span class="text-fire-red font-weight-bold">Country</span></div>
                   <div class="col-lg-5">${productionsCountry}</div>
               </div>
           </div>
