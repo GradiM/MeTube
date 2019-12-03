@@ -31,6 +31,59 @@ const showArticle = (article) => {
   // S'il y a un synopsis, on l'affiche. Sinon on écrit "Unknown plot"
   const overview = article.overview ? `${article.overview}` : 'Unknown plot';
 
+  let starsRating;
+
+  const voteAverageToHundred = article.vote_average * 10;
+  const percentageVoteAverage = voteAverageToHundred / 100;
+  const percentageOfStarsRating = percentageVoteAverage * 5;
+
+  // Si le pourcentage du ratio de vote est inférieur à la moyenne d'une étoile
+  if (percentageOfStarsRating < Math.floor(percentageOfStarsRating) + 0.5) {
+    starsRating = `
+                  <div class="star-empty" style="position: relative;width: 50%;">
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                  
+                    <div class="star-filled" style="width: ${voteAverageToHundred}%;position:absolute;top:0;overflow: hidden;height: -webkit-fill-available;">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                    </div>
+                  </div>
+    `;
+  } else {
+    starsRating = `
+                  <div class="star-empty" style="position: relative;width: 50%;height: 25px;">
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    
+                    <div class="star-filled" style="position: relative;bottom: 25px;width: ${voteAverageToHundred}%;overflow: hidden;height: -webkit-fill-available;">
+                      <i class="fas fa-star-half"></i>
+                      <i class="fas fa-star-half"></i>
+                      <i class="fas fa-star-half"></i>
+                      <i class="fas fa-star-half"></i>
+                      <i class="fas fa-star-half"></i>
+                      
+                      <div class="star-half-filled" style="width: ${voteAverageToHundred + 7}%;position:absolute;top: 0;overflow: hidden;height: -webkit-fill-available;">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                      </div>
+                    </div>
+                  </div>
+    `;
+  }
+
   let html = '';
 
   html += `
@@ -58,20 +111,7 @@ const showArticle = (article) => {
 }
                 </div>
                 <div class="col-md-4 text-fire-red">
-                    <div class="position-absolute">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                    <div>
-                      <i class="far fa-star"></i>
-                      <i class="far fa-star"></i>
-                      <i class="far fa-star"></i>
-                      <i class="far fa-star"></i>
-                      <i class="far fa-star"></i>
-                    </div>
+                    ${starsRating}
                 </div>
             </div>
               <div class="row align-items-center">
