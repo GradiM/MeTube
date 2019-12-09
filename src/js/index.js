@@ -22,6 +22,7 @@ import UrlParams from './services/urlParams';
 
 import timeConvertToHourMinute from './services/timeConvertToHourMinute';
 import showFavorites from "./services/showFavorites";
+import checkFavoriteIcon from "./services/checkFavoriteIcon";
 
 if (UrlParams.Url().pathname === '/' || UrlParams.Url().pathname === '/index.html') {
   document.getElementById('global-search-bar').innerHTML = showArticlesBySearch();
@@ -149,16 +150,12 @@ if (UrlParams.Url().pathname === '/' || UrlParams.Url().pathname === '/index.htm
 
       // Pour tous les boutons "favoris"
       Object.keys(articles).forEach(elemKey => {
-        let favoriteIcon;
         // Lorsque l'utilisateur clique sur un bouton
         articles[elemKey].addEventListener('click', () => {
           const movieId = articles[elemKey].getAttribute("id");
 
           // Si le film est déjà en favori
           if (chosenArticles.includes(movieId)) {
-            favoriteIcon = '<i class="far fa-heart"></i>';
-            /*document.getElementById(movieId).innerHTML = '<i class="far fa-heart"></i>';
-            localStorage.setItem("favoriteIcon", favoriteIcon);*/
 
             // On supprime le film de notre tableau
             // On parcours notre tableau, on pose un filtre
@@ -170,9 +167,6 @@ if (UrlParams.Url().pathname === '/' || UrlParams.Url().pathname === '/index.htm
             // On stock notre tableau en local
             localStorage.setItem("favoriteMovies", chosenArticles);
           } else { // Si le film n'est pas encore en favori
-            favoriteIcon = '<i class="fas fa-heart"></i>';
-            /*document.getElementById(movieId).innerHTML = '<i class="fas fa-heart"></i>';
-            localStorage.setItem("favoriteIcon", favoriteIcon);*/
 
             // On ajoute l'id à notre tableau
             chosenArticles.push(movieId);
@@ -180,6 +174,8 @@ if (UrlParams.Url().pathname === '/' || UrlParams.Url().pathname === '/index.htm
             // On stock notre tableau en local
             localStorage.setItem("favoriteMovies", chosenArticles);
           }
+
+          document.getElementById(movieId).innerHTML = checkFavoriteIcon(null, null, chosenArticles, movieId).getChangedFavoriteIcon;
         }, false);
       });
 

@@ -1,5 +1,7 @@
 // Affiche les articles
 // la fonction showArticles récupère des données en paramètre (variable "data")
+import checkFavoriteIcon from "./checkFavoriteIcon";
+
 const showArticles = (data) => {
   let html = '';
   // On boucle sur la propriété "results" de l'objet "data" qui contient nos données
@@ -15,6 +17,8 @@ const showArticles = (data) => {
       overview = 'Unknown plot';
     }
 
+    const favoriteArticles = localStorage.getItem("favoriteMovies");
+    const favoriteIcon = checkFavoriteIcon(favoriteArticles, article.id, null, null).getFavoriteIcon;
 
     html += `
         <div class="card mb-4">
@@ -39,7 +43,7 @@ const showArticles = (data) => {
                         </a>
                       </div>
                       <div class="col-lg-2">
-                        <span id="${article.id}" class="h4 text-fire-red favorite"><i class="far fa-heart"></i></span>
+                        <span id="${article.id}" class="h4 text-fire-red favorite">${favoriteIcon}</span>
                       </div>
                     </div>
                     <div>
