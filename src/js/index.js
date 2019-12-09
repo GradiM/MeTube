@@ -21,6 +21,7 @@ import showArticle from './services/showArticle';
 import UrlParams from './services/urlParams';
 
 import timeConvertToHourMinute from './services/timeConvertToHourMinute';
+import showFavorites from "./services/showFavorites";
 
 if (UrlParams.Url().pathname === '/' || UrlParams.Url().pathname === '/index.html') {
   document.getElementById('global-search-bar').innerHTML = showArticlesBySearch();
@@ -134,6 +135,54 @@ if (UrlParams.Url().pathname === '/' || UrlParams.Url().pathname === '/index.htm
     // const newest = latestArticles();
     newest(null, (results) => {
       document.getElementById('left-side').innerHTML = showArticles(results);
+
+      let chosenArticles;
+      // S'il y a déjà des films en favori
+      localStorage.getItem("favoriteMovies")
+        // On les récupère sous forme de tableau
+        ? chosenArticles = localStorage.getItem("favoriteMovies").split(',')
+        // Sinon, on déclare un nouveau tableau vide
+        : chosenArticles = []
+      ;
+
+      const articles = document.getElementsByClassName("favorite");
+
+      // Pour tous les boutons "favoris"
+      Object.keys(articles).forEach(elemKey => {
+        let favoriteIcon;
+        // Lorsque l'utilisateur clique sur un bouton
+        articles[elemKey].addEventListener('click', () => {
+          const movieId = articles[elemKey].getAttribute("id");
+
+          // Si le film est déjà en favori
+          if (chosenArticles.includes(movieId)) {
+            favoriteIcon = '<i class="far fa-heart"></i>';
+            /*document.getElementById(movieId).innerHTML = '<i class="far fa-heart"></i>';
+            localStorage.setItem("favoriteIcon", favoriteIcon);*/
+
+            // On supprime le film de notre tableau
+            // On parcours notre tableau, on pose un filtre
+            // Si une valeur du tableau correspond à notre film, elle ne sera pas retournée
+            chosenArticles = chosenArticles.filter(value => {
+              return value !==  movieId
+            });
+
+            // On stock notre tableau en local
+            localStorage.setItem("favoriteMovies", chosenArticles);
+          } else { // Si le film n'est pas encore en favori
+            favoriteIcon = '<i class="fas fa-heart"></i>';
+            /*document.getElementById(movieId).innerHTML = '<i class="fas fa-heart"></i>';
+            localStorage.setItem("favoriteIcon", favoriteIcon);*/
+
+            // On ajoute l'id à notre tableau
+            chosenArticles.push(movieId);
+
+            // On stock notre tableau en local
+            localStorage.setItem("favoriteMovies", chosenArticles);
+          }
+        }, false);
+      });
+
     });
 
     // Lorsque l'utilisateur clique sur le boutton du tri
@@ -148,4 +197,20 @@ if (UrlParams.Url().pathname === '/' || UrlParams.Url().pathname === '/index.htm
       document.getElementById('article-container').innerHTML = showArticle(results);
     });
   }
+} else if (UrlParams.Url().pathname === '/favorites.html') {
+  let storedArticles;
+  // On récupère le tableau stocké en local, on l'insert dans la variable storedArticles
+  // (automatiquement converti en chaîne de caractère)
+  storedArticles = localStorage.getItem("favoriteMovies");
+
+  // On converti la chaîne de caractère en tableau
+  storedArticles = storedArticles.split(',');
+
+  // On parcour le tableau qui contient donc les IDs des films ajoutés en favori
+  storedArticles.forEach(value => {
+    const favorite = articleSelected('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
+    favorite(+value, (results) => {
+      document.getElementById('favortie-container').innerHTML += showFavorites(results);
+    });
+  });
 }

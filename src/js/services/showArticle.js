@@ -1,7 +1,7 @@
-// Affiche les articles
-// la fonction showArticles récupère des données en paramètre (variable "data")
 import timeConvertToHourMinute from './timeConvertToHourMinute';
 
+// Affiche les articles
+// la fonction showArticles récupère des données en paramètre (variable "data")
 const showArticle = (article) => {
   let poster;
   if (article.backdrop_path) { // Si c'est un poster au format Paysage
@@ -38,16 +38,19 @@ const showArticle = (article) => {
   const percentageOfStarsRating = percentageVoteAverage * 5;
 
   // Si le pourcentage du ratio de vote est inférieur à la moyenne d'une étoile
+  // On affiche pas cette étoile
   if (percentageOfStarsRating < Math.floor(percentageOfStarsRating) + 0.5) {
     starsRating = `
-                  <div class="star-empty" style="position: relative;width: 50%;">
+                  <div class="star-empty" style="position:relative;
+                  width: 50%;">
                     <i class="far fa-star"></i>
                     <i class="far fa-star"></i>
                     <i class="far fa-star"></i>
                     <i class="far fa-star"></i>
                     <i class="far fa-star"></i>
                   
-                    <div class="star-filled" style="width: ${voteAverageToHundred}%;position:absolute;top:0;overflow: hidden;height: -webkit-fill-available;">
+                    <div class="star-filled" style="width:${voteAverageToHundred}%;
+                    position:absolute;top:0;height:-webkit-fill-available;overflow:hidden;">
                       <i class="fas fa-star"></i>
                       <i class="fas fa-star"></i>
                       <i class="fas fa-star"></i>
@@ -56,23 +59,25 @@ const showArticle = (article) => {
                     </div>
                   </div>
     `;
-  } else {
+  } else { // Sinon, on affiche cette étoile de moitié
     starsRating = `
-                  <div class="star-empty" style="position: relative;width: 50%;height: 25px;">
+                  <div class="star-empty" style="position:relative;width:50%;height:25px;">
                     <i class="far fa-star"></i>
                     <i class="far fa-star"></i>
                     <i class="far fa-star"></i>
                     <i class="far fa-star"></i>
                     <i class="far fa-star"></i>
                     
-                    <div class="star-filled" style="position: relative;bottom: 25px;width: ${voteAverageToHundred}%;overflow: hidden;height: -webkit-fill-available;">
+                    <div class="star-filled" style="position:relative;bottom:25px;
+                    width:${voteAverageToHundred}%;height:-webkit-fill-available;overflow:hidden;">
                       <i class="fas fa-star-half"></i>
                       <i class="fas fa-star-half"></i>
                       <i class="fas fa-star-half"></i>
                       <i class="fas fa-star-half"></i>
                       <i class="fas fa-star-half"></i>
                       
-                      <div class="star-half-filled" style="width: ${voteAverageToHundred + 7}%;position:absolute;top: 0;overflow: hidden;height: -webkit-fill-available;">
+                      <div class="star-half-filled" style="width:${voteAverageToHundred + 7}%;
+                      position:absolute;top:0;height:-webkit-fill-available;overflow:hidden;">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>

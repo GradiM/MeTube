@@ -15,6 +15,7 @@ const showArticles = (data) => {
       overview = 'Unknown plot';
     }
 
+
     html += `
         <div class="card mb-4">
           <div class="card-body">
@@ -27,13 +28,20 @@ const showArticles = (data) => {
 }
                     </a>
                   </div>
-                  <div class="col-lg-6">
-                    <a href="article.html?movie=${article.id}" class="text-fire-red text-decoration-none">
-                      ${article.original_title === article.title
-    ? `<h5>${article.title}</h5>`
-    : `<h5>${article.original_title}</h5><span class="font-italic">${article.title}</span>`
-}
-                    </a>
+                  <div class="col-lg-6 text-center float-lg-left">
+                    <div class="row">
+                      <div class="col-lg-10">
+                        <a href="article.html?movie=${article.id}" class="text-fire-red text-decoration-none">
+                          ${article.original_title === article.title
+        ? `<h5>${article.title}</h5>`
+        : `<h5>${article.original_title}</h5><span class="font-italic">${article.title}</span>`
+    }
+                        </a>
+                      </div>
+                      <div class="col-lg-2">
+                        <span id="${article.id}" class="h4 text-fire-red favorite"><i class="far fa-heart"></i></span>
+                      </div>
+                    </div>
                     <div>
                         <p>${article.release_date.substr(0, 4)}</p>
                     </div>
@@ -41,13 +49,13 @@ const showArticles = (data) => {
                   </div>
               </div>
           </div>
-          <div class="card-body">
-              <div class="row text-center">
+          <div class="card-body text-center float-lg-left">
+              <div class="row">
                   <div class="col-lg-6">
-                      <p class="float-lg-left"><span class="text-fire-red font-weight-bold">Popularity</span> ${Math.round(article.popularity)}%</p>
+                      <p><span class="text-fire-red font-weight-bold">Popularity</span> ${Math.round(article.popularity)}%</p>
                   </div>
                   <div class="col-lg-6">
-                      <a href="article.html?movie=${article.id}" class="h3 text-fire-red float-lg-right"><i class="fab fa-readme"></i></a>
+                      <a href="article.html?movie=${article.id}" class="h3 text-fire-red"><i class="fab fa-readme"></i></a>
                   </div>
               </div>
           </div>
