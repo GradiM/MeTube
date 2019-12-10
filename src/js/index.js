@@ -23,6 +23,7 @@ import UrlParams from './services/urlParams';
 import timeConvertToHourMinute from './services/timeConvertToHourMinute';
 import showFavorites from "./services/showFavorites";
 import checkFavoriteIcon from "./services/checkFavoriteIcon";
+import selectFavoriteArticle from "./services/selectFavoriteArticle";
 
 if (UrlParams.Url().pathname === '/' || UrlParams.Url().pathname === '/index.html') {
   document.getElementById('global-search-bar').innerHTML = showArticlesBySearch();
@@ -63,6 +64,9 @@ if (UrlParams.Url().pathname === '/' || UrlParams.Url().pathname === '/index.htm
     // const search = searchArticles();
     search(searchedName, (results) => {
       document.getElementById('left-side').innerHTML = showArticles(results);
+
+      // Lorsque l'utilisateur clique sur le bouton favori
+      selectFavoriteArticle();
     });
 
     document.getElementById('order').disabled = true;
@@ -75,6 +79,9 @@ if (UrlParams.Url().pathname === '/' || UrlParams.Url().pathname === '/index.htm
     // const search = articlesSorted();
     listByDate(null, searchedYear, (results) => {
       document.getElementById('left-side').innerHTML = showArticles(results);
+
+      // Lorsque l'utilisateur clique sur le bouton favori
+      selectFavoriteArticle();
     });
 
     // Lorsque l'utilisateur clique sur le boutton du tri
@@ -108,6 +115,9 @@ if (UrlParams.Url().pathname === '/' || UrlParams.Url().pathname === '/index.htm
     // const search = articleByGenre();
     listByGenre(null, searchedGenres, (results) => {
       document.getElementById('left-side').innerHTML = showArticles(results);
+
+      // Lorsque l'utilisateur clique sur le bouton favori
+      selectFavoriteArticle();
     });
 
     // Lorsque l'utilisateur clique sur le boutton du tri
@@ -125,6 +135,9 @@ if (UrlParams.Url().pathname === '/' || UrlParams.Url().pathname === '/index.htm
     // const search = articlesSorted();
     listByDuration(null, durationMinMinuteFormat, durationMaxMinuteFormat, (results) => {
       document.getElementById('left-side').innerHTML = showArticles(results);
+
+      // Lorsque l'utilisateur clique sur le bouton favori
+      selectFavoriteArticle();
     });
 
     // Lorsque l'utilisateur clique sur le boutton du tri
@@ -137,48 +150,8 @@ if (UrlParams.Url().pathname === '/' || UrlParams.Url().pathname === '/index.htm
     newest(null, (results) => {
       document.getElementById('left-side').innerHTML = showArticles(results);
 
-      let chosenArticles;
-      // S'il y a déjà des films en favori
-      localStorage.getItem("favoriteMovies")
-        // On les récupère sous forme de tableau
-        ? chosenArticles = localStorage.getItem("favoriteMovies").split(',')
-        // Sinon, on déclare un nouveau tableau vide
-        : chosenArticles = []
-      ;
-
-      const articles = document.getElementsByClassName("favorite");
-
-      // Pour tous les boutons "favoris"
-      Object.keys(articles).forEach(elemKey => {
-        // Lorsque l'utilisateur clique sur un bouton
-        articles[elemKey].addEventListener('click', () => {
-          const movieId = articles[elemKey].getAttribute("id");
-
-          // Si le film est déjà en favori
-          if (chosenArticles.includes(movieId)) {
-
-            // On supprime le film de notre tableau
-            // On parcours notre tableau, on pose un filtre
-            // Si une valeur du tableau correspond à notre film, elle ne sera pas retournée
-            chosenArticles = chosenArticles.filter(value => {
-              return value !==  movieId
-            });
-
-            // On stock notre tableau en local
-            localStorage.setItem("favoriteMovies", chosenArticles);
-          } else { // Si le film n'est pas encore en favori
-
-            // On ajoute l'id à notre tableau
-            chosenArticles.push(movieId);
-
-            // On stock notre tableau en local
-            localStorage.setItem("favoriteMovies", chosenArticles);
-          }
-
-          document.getElementById(movieId).innerHTML = checkFavoriteIcon(null, null, chosenArticles, movieId).getChangedFavoriteIcon;
-        }, false);
-      });
-
+      // Lorsque l'utilisateur clique sur le bouton favori
+      selectFavoriteArticle();
     });
 
     // Lorsque l'utilisateur clique sur le boutton du tri
@@ -206,7 +179,17 @@ if (UrlParams.Url().pathname === '/' || UrlParams.Url().pathname === '/index.htm
   storedArticles.forEach(value => {
     const favorite = articleSelected('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
     favorite(+value, (results) => {
-      document.getElementById('favortie-container').innerHTML += showFavorites(results);
+      document.getElementById('favorite-content').innerHTML += showFavorites(results);
+
+      // Lorsque l'utilisateur clique sur le bouton favori
+      selectFavoriteArticle();
+
+      // Lorsque l'utilisateur clique sur le bouton de suppression de tous les favoris
+      document.getElementById('fav-clear').onclick = () => {
+        // On supprime les films en favori
+        // On supprime notre tableau en local
+        localStorage.removeItem("favoriteMovies");
+      };
     });
   });
 }

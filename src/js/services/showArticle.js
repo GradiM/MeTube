@@ -1,4 +1,5 @@
 import timeConvertToHourMinute from './timeConvertToHourMinute';
+import checkFavoriteIcon from "./checkFavoriteIcon";
 
 // Affiche les articles
 // la fonction showArticles récupère des données en paramètre (variable "data")
@@ -88,6 +89,14 @@ const showArticle = (article) => {
                   </div>
     `;
   }
+
+  const favoriteArticles = localStorage.getItem("favoriteMovies");
+  const favoriteIcon = checkFavoriteIcon(
+    favoriteArticles,
+    article.id,
+    null,
+    null
+  ).getFavoriteIcon;
 
   let html = '';
 

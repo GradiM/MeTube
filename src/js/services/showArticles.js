@@ -18,7 +18,12 @@ const showArticles = (data) => {
     }
 
     const favoriteArticles = localStorage.getItem("favoriteMovies");
-    const favoriteIcon = checkFavoriteIcon(favoriteArticles, article.id, null, null).getFavoriteIcon;
+    const favoriteIcon = checkFavoriteIcon(
+      favoriteArticles,
+      article.id,
+      null,
+      null
+    ).getFavoriteIcon;
 
     html += `
         <div class="card mb-4">
@@ -43,7 +48,7 @@ const showArticles = (data) => {
                         </a>
                       </div>
                       <div class="col-lg-2">
-                        <span id="${article.id}" class="h4 text-fire-red favorite">${favoriteIcon}</span>
+                        <span id="fav-${article.id}" class="h4 text-fire-red favorite">${favoriteIcon}</span>
                       </div>
                     </div>
                     <div>
