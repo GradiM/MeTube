@@ -31,8 +31,8 @@ const checkFavoriteIcon = (
   }
 
   return {
-    getFavoriteIcon: getFavoriteIcon,
-    getChangedFavoriteIcon: getChangedFavoriteIcon
+    getFavoriteIcon,
+    getChangedFavoriteIcon,
   };
 };
 

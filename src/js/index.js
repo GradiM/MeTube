@@ -17,13 +17,12 @@ import showArticlesBySearch from './services/showArticlesBySearch';
 import showPageTitle from './services/showPageTitle';
 import showArticlesByDuration from './services/showAticlesByDuration';
 import showArticle from './services/showArticle';
+import showFavorites from './services/showFavorites';
+import selectFavoriteArticle from './services/selectFavoriteArticle';
 
 import UrlParams from './services/urlParams';
 
 import timeConvertToHourMinute from './services/timeConvertToHourMinute';
-import showFavorites from "./services/showFavorites";
-import checkFavoriteIcon from "./services/checkFavoriteIcon";
-import selectFavoriteArticle from "./services/selectFavoriteArticle";
 
 if (UrlParams.Url().pathname === '/' || UrlParams.Url().pathname === '/index.html') {
   document.getElementById('global-search-bar').innerHTML = showArticlesBySearch();
@@ -164,21 +163,24 @@ if (UrlParams.Url().pathname === '/' || UrlParams.Url().pathname === '/index.htm
     // const search = articleSelected();
     article(selectedArticle, (results) => {
       document.getElementById('article-container').innerHTML = showArticle(results);
+
+      // Lorsque l'utilisateur clique sur le bouton favori
+      selectFavoriteArticle();
     });
   }
 } else if (UrlParams.Url().pathname === '/favorites.html') {
   let storedArticles;
   // On récupère le tableau stocké en local, on l'insert dans la variable storedArticles
   // (automatiquement converti en chaîne de caractère)
-  storedArticles = localStorage.getItem("favoriteMovies");
+  storedArticles = localStorage.getItem('favoriteMovies');
 
   // On converti la chaîne de caractère en tableau
   storedArticles = storedArticles.split(',');
 
   // On parcour le tableau qui contient donc les IDs des films ajoutés en favori
-  storedArticles.forEach(value => {
+  storedArticles.forEach((value) => {
     const favorite = articleSelected('https://api.themoviedb.org/3', 'dcb1674909d2bb927677408807375634');
-    favorite(+value, (results) => {
+    favorite(+value, (results) => {console.log(document.getElementById('favorite-content'));
       document.getElementById('favorite-content').innerHTML += showFavorites(results);
 
       // Lorsque l'utilisateur clique sur le bouton favori
@@ -188,7 +190,7 @@ if (UrlParams.Url().pathname === '/' || UrlParams.Url().pathname === '/index.htm
       document.getElementById('fav-clear').onclick = () => {
         // On supprime les films en favori
         // On supprime notre tableau en local
-        localStorage.removeItem("favoriteMovies");
+        localStorage.removeItem('favoriteMovies');
       };
     });
   });

@@ -1,6 +1,6 @@
 // Affiche les articles
 // la fonction showArticles récupère des données en paramètre (variable "data")
-import checkFavoriteIcon from "./checkFavoriteIcon";
+import checkFavoriteIcon from './checkFavoriteIcon';
 
 const showFavorites = (article) => {
   let html = '';
@@ -15,12 +15,12 @@ const showFavorites = (article) => {
     overview = 'Unknown plot';
   }
 
-  const favoriteArticles = localStorage.getItem("favoriteMovies");
+  const favoriteArticles = localStorage.getItem('favoriteMovies');
   const favoriteIcon = checkFavoriteIcon(
     favoriteArticles,
     article.id,
     null,
-    null
+    null,
   ).getFavoriteIcon;
 
 
@@ -33,7 +33,7 @@ const showFavorites = (article) => {
                     ${article.poster_path
     ? `<img class="card-img-top" src="https://image.tmdb.org/t/p/w500/${article.poster_path}" alt="${article.title}'s image poster">`
     : '<span class="img-none"><i class="far fa-image"></i></span>'
-  }
+}
                   </a>
                 </div>
                 <div class="col-lg-6 text-center float-lg-left">
@@ -43,7 +43,7 @@ const showFavorites = (article) => {
                         ${article.original_title === article.title
     ? `<h5>${article.title}</h5>`
     : `<h5>${article.original_title}</h5><span class="font-italic">${article.title}</span>`
-  }
+}
                       </a>
                     </div>
                     <div class="col-lg-2">

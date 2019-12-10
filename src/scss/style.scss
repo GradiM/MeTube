@@ -136,3 +136,10 @@ nav {
     font-size: 200px;
   }
 }
+
+.favorite {
+  cursor: pointer;
+  &:hover{
+    color: #fe1b00cc;
+  }
+}
